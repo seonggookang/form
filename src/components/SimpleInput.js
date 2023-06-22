@@ -3,12 +3,22 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  // const [formIsValid, setFormIsValid] = useState(false);
 
   const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
-  // 1. onChange로 input값을 넣는 방법
+
+  let formIsValid = false;
+
+  // useEffect(() => { useEffect를 써도 되지만 손해일뿐, 재평가를 할 때 추가적인 컴포넌트만 생길 뿐
+  if (enteredNameIsValid) {
+    // && enteredAgeIsValid 등등
+    formIsValid = true;
+  }
+  // }, [enteredNameIsValid]);
+
   const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value); // setState는 비동기 처리이므로 즉각적으로 처리되지 않는다.
+    setEnteredName(event.target.value);
   };
 
   const nameInpurBlurHandler = (event) => {
@@ -48,7 +58,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
