@@ -5,13 +5,19 @@ const SimpleInput = (props) => {
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
   // const [formIsValid, setFormIsValid] = useState(false);
 
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
+
   const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
+  const enteredEmailIsValid = enteredEmail.includes("@"); // regex로 할수도있겠지만 단순하게 그냥.
+  const enteredEmailIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
 
   let formIsValid = false;
 
   // useEffect(() => { useEffect를 써도 되지만 손해일뿐, 재평가를 할 때 추가적인 컴포넌트만 생길 뿐
-  if (enteredNameIsValid) {
+  if (enteredNameIsValid && enteredEmailIsValid) {
     // && enteredAgeIsValid 등등
     formIsValid = true;
   }
@@ -21,8 +27,16 @@ const SimpleInput = (props) => {
     setEnteredName(event.target.value);
   };
 
-  const nameInpurBlurHandler = (event) => {
+  const emailInputChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);
+  };
+
+  const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
+  };
+
+  const emailInputBlurHandler = (event) => {
+    setEnteredEmailTouched(true);
   };
 
   const formSubmissionHandler = (event) => {
@@ -36,9 +50,16 @@ const SimpleInput = (props) => {
 
     setEnteredName("");
     setEnteredNameTouched(false);
+
+    setEnteredEmail("");
+    setEnteredEmailTouched(false);
   };
 
   const nameInputClasses = nameInputIsInvalid
+    ? "form-control invalid"
+    : "form-control";
+
+  const emailInputClasses = enteredEmailIsInvalid
     ? "form-control invalid"
     : "form-control";
 
@@ -50,24 +71,24 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
-          onBlur={nameInpurBlurHandler}
+          onBlur={nameInputBlurHandler}
           value={enteredName}
         />
         {nameInputIsInvalid && (
           <p className="error-text">Name must not be empty</p>
         )}
       </div>
-      <div className={nameInputClasses}>
+      <div className={emailInputClasses}>
         <label htmlFor="email">Your Email</label>
         <input
-          type="text"
+          type="email"
           id="email"
-          onChange={nameInputChangeHandler}
-          onBlur={nameInpurBlurHandler}
-          value={enteredName}
+          onChange={emailInputChangeHandler}
+          onBlur={emailInputBlurHandler}
+          value={enteredEmail}
         />
-        {nameInputIsInvalid && (
-          <p className="error-text">Email must not be empty</p>
+        {enteredEmailIsInvalid && (
+          <p className="error-text">Please enter a valid email</p>
         )}
       </div>
       <div className="form-actions">
