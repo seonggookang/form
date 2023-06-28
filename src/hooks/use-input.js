@@ -1,3 +1,5 @@
+// 커스텀 훅
+
 import { useState } from "react";
 
 const useInput = (validateValue) => {
@@ -23,7 +25,7 @@ const useInput = (validateValue) => {
   return {
     value: enteredValue,
     isValid: valueIsValid,
-    hasError, // hasError: hasError << 이거랑 똑같음
+    hasError, // value를 안 넣어주면 hasError: hasError << 이거랑 똑같음
     valueChangeHandler,
     inputBlurHandler,
     reset,
