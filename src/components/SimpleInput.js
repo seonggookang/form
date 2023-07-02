@@ -2,7 +2,7 @@ import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
   const {
-    value: enteredName,
+    value: enteredName, // value를 enteredName으로 쓰겠다
     isValid: enteredNameIsValid,
     hasError: nameInputHasError,
     valueChangeHandler: nameChangeHandler,

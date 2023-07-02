@@ -23,7 +23,7 @@ const useInput = (validateValue) => {
   };
 
   return {
-    value: enteredValue,
+    value: enteredValue, // enteredValue를 value로 설정
     isValid: valueIsValid,
     hasError, // value를 안 넣어주면 hasError: hasError << 이거랑 똑같음
     valueChangeHandler,
